@@ -32,21 +32,12 @@ export const metadata: Metadata = {
     title: "ANSH9BOSS'S portfolio",
     description: config.description.short,
     url: config.site,
-    images: [
-      {
-        url: config.ogImg,
-        width: 800,
-        height: 600,
-        alt: "Portfolio preview",
-      },
-    ],
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "ANSH9BOSS'S portfolio",
     description: config.description.short,
-    images: [config.ogImg],
   },
   robots: {
     index: true,
