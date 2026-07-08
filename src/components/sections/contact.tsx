@@ -23,11 +23,7 @@ const ContactSection = () => {
 
   return (
     <SectionWrapper id="contact" className="min-h-screen max-w-7xl mx-auto flex flex-col justify-center py-20">
-      <SectionHeader id='contact' className="relative mb-6" title={
-        <>
-          LET&apos;S WORK <br />
-          TOGETHER
-        </>} />
+      <SectionHeader id='contact' className="relative mb-6" title={<>LET&apos;S WORK TOGETHER</>} />
       
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 z-[9999] mx-auto w-full max-w-6xl px-4 mt-6 items-stretch">
         {/* Left Column: Direct Links (5 Columns) */}
