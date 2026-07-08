@@ -87,7 +87,7 @@ const ContactForm = () => {
           <Label htmlFor="fullname">Full name</Label>
           <Input
             id="fullname"
-            placeholder="Your Name"
+            placeholder="Enter your name"
             type="text"
             value={fullName}
             onChange={(e) => { setFullName(e.target.value); setErrors((p) => ({ ...p, fullName: undefined })); }}
@@ -98,7 +98,7 @@ const ContactForm = () => {
           <Label htmlFor="email">Email Address</Label>
           <Input
             id="email"
-            placeholder="you@example.com"
+            placeholder="Enter your email address"
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
@@ -109,7 +109,7 @@ const ContactForm = () => {
       <div className="grid w-full gap-1.5 mb-4">
         <Label htmlFor="content">Your Message</Label>
         <Textarea
-          placeholder="Tell me about about your project,"
+          placeholder="Describe your project, systems, or inquiry details..."
           id="content"
           value={message}
           onChange={(e) => { setMessage(e.target.value); setErrors((p) => ({ ...p, message: undefined })); }}
