@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   keywords: config.keywords,
   authors: [{ name: config.author }],
   openGraph: {
-    title: config.title,
+    title: "ANSH9BOSS'S portfolio",
     description: config.description.short,
     url: config.site,
     images: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: config.title,
+    title: "ANSH9BOSS'S portfolio",
     description: config.description.short,
     images: [config.ogImg],
   },

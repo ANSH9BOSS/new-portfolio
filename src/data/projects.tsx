@@ -4,6 +4,7 @@ import { TypographyP } from "@/components/ui/typography";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
+import { config } from "@/data/config";
 
 const BASE_PATH = "/assets/projects-screenshots";
 const PLACEHOLDER_IMG = "/assets/logo-dark.svg";
@@ -97,7 +98,7 @@ const projects: Project[] = [
     title: "Stitch Hosting",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.ts,
@@ -127,7 +128,7 @@ const projects: Project[] = [
     title: "Stitch Analyzer",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.ts,
@@ -155,7 +156,7 @@ const projects: Project[] = [
     title: "AutoTierList Leaderboards",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.react,
@@ -184,7 +185,7 @@ const projects: Project[] = [
     title: "StitchAI Assistant",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.ts,
@@ -213,7 +214,7 @@ const projects: Project[] = [
     title: "Elite Portfolios",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.ts,
@@ -241,7 +242,7 @@ const projects: Project[] = [
     title: "100+ Discord Bots",
     src: PLACEHOLDER_IMG,
     screenshots: [],
-    live: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+    live: config.site,
     skills: {
       frontend: [
         PROJECT_SKILLS.ts,

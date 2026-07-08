@@ -2,11 +2,11 @@
 
 Interactive 3D developer portfolio featuring an immersive Spline keyboard where keycaps represent core technical skills. Built with Next.js, React, TypeScript, GSAP, and Tailwind CSS.
 
-This is the official portfolio codebase for **ANSH9BOSS** (Systems Architect & Security Engineer).
+This is the official portfolio codebase for **ANSH9BOSS** (Overall Developer).
 
 ## 🚀 Live Preview
 Explore the live deployment here:
-👉 **[warranties-gen-gasoline-screenshot.trycloudflare.com](https://warranties-gen-gasoline-screenshot.trycloudflare.com)**
+👉 **[ansh9boss2.vercel.app](https://ansh9boss2.vercel.app)**
 
 ---
 

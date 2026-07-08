@@ -19,7 +19,7 @@ const config = {
   ],
   author: "ANSH9BOSS",
   email: "anshkumar19zx@gmail.com",
-  site: "https://warranties-gen-gasoline-screenshot.trycloudflare.com",
+  site: "https://ansh9boss2.vercel.app/",
 
   // for github stars button
   githubUsername: "ANSH9BOSS",
