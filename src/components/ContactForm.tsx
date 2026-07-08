@@ -84,10 +84,10 @@ const ContactForm = () => {
     <form className="w-full mx-auto sm:mt-4" onSubmit={handleSubmit} aria-busy={loading}>
       <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
         <LabelInputContainer>
-          <Label htmlFor="fullname">Full name</Label>
+          <Label htmlFor="fullname" className="text-zinc-800 dark:text-zinc-200">Full name</Label>
           <Input
             id="fullname"
-            placeholder="Enter your name"
+            placeholder="Your Name"
             type="text"
             value={fullName}
             onChange={(e) => { setFullName(e.target.value); setErrors((p) => ({ ...p, fullName: undefined })); }}
@@ -95,10 +95,10 @@ const ContactForm = () => {
           {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="email" className="text-zinc-800 dark:text-zinc-200">Email Address</Label>
           <Input
             id="email"
-            placeholder="Enter your email address"
+            placeholder="you@example.com"
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value); setErrors((p) => ({ ...p, email: undefined })); }}
@@ -107,15 +107,15 @@ const ContactForm = () => {
         </LabelInputContainer>
       </div>
       <div className="grid w-full gap-1.5 mb-4">
-        <Label htmlFor="content">Your Message</Label>
+        <Label htmlFor="content" className="text-zinc-800 dark:text-zinc-200">Your Message</Label>
         <Textarea
-          placeholder="Describe your project, systems, or inquiry details..."
+          placeholder="Tell me about your project..."
           id="content"
           value={message}
           onChange={(e) => { setMessage(e.target.value); setErrors((p) => ({ ...p, message: undefined })); }}
         />
         {errors.message && <p className="text-sm text-red-500">{errors.message}</p>}
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">
           I&apos;ll never share your data with anyone else. Pinky promise!
         </p>
       </div>
