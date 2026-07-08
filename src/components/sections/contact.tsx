@@ -6,8 +6,9 @@ import { SectionHeader } from "./section-header";
 import SectionWrapper from "../ui/section-wrapper";
 import { SiDiscord } from "react-icons/si";
 import { Mail, ArrowRight, Copy, Check } from "lucide-react";
-import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
+import { DiscordStatusWidget } from "../discord-status";
+import Link from "next/link";
 
 const ContactSection = () => {
   const [copied, setCopied] = useState(false);
@@ -48,7 +49,10 @@ const ContactSection = () => {
                   </button>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-indigo-400 transition-colors">Discord DM</h3>
+                  <div className="flex justify-between items-center flex-wrap gap-2">
+                    <h3 className="text-2xl font-bold tracking-tight text-white group-hover:text-indigo-400 transition-colors">Discord DM</h3>
+                    <DiscordStatusWidget showActivity={false} />
+                  </div>
                   <p className="text-zinc-400 mt-2">
                     DM for immediate projects, business inquiries, or custom systems discussions.
                   </p>

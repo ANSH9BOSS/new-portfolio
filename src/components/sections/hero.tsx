@@ -14,6 +14,8 @@ import ScrollDownIcon from "../scroll-down-icon";
 import { SiDiscord } from "react-icons/si";
 import { config } from "@/data/config";
 
+import { DiscordStatusWidget } from "../discord-status";
+
 import SectionWrapper from "../ui/section-wrapper";
 
 const HeroSection = () => {
@@ -76,6 +78,12 @@ const HeroSection = () => {
                   >
                     Overall Developer
                   </p>
+                </BlurIn>
+
+                <BlurIn delay={1.4}>
+                  <div className="mt-4 md:self-start">
+                    <DiscordStatusWidget />
+                  </div>
                 </BlurIn>
               </div>
               <div className="mt-8 flex flex-col gap-3 w-fit">
