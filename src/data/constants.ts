@@ -261,9 +261,9 @@ export const EXPERIENCE: Experience[] = [
     startDate: "Jan 2026",
     endDate: "Present",
     title: "Founder",
-    company: "Stitch Hosting",
+    company: "Quorox Cloud",
     description: [
-      "Founded and engineered Stitch Hosting game server virtualization platform.",
+      "Founded and engineered Quorox Cloud game server virtualization platform.",
       "Configured automated WHMCS VM provisioning APIs to control Pterodactyl panel nodes.",
       "Maintained secure VM resources, billing integrations, and automated customer support tickets.",
     ],

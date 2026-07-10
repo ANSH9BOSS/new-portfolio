@@ -1,13 +1,13 @@
 const config = {
   title: "ANSH9BOSS | Overall Developer",
   description: {
-    long: "Explore the portfolio of ANSH9BOSS — Overall Developer and founder of Stitch Hosting. Specializing in low-level Java NMS modding, custom anti-cheat kernels (Stitch Analyzer), cross-platform desktop shells, mobile binaries, and automated Pterodactyl virtualization infrastructure.",
+    long: "Explore the portfolio of ANSH9BOSS — Overall Developer and founder of Quorox Cloud. Specializing in low-level Java NMS modding, custom anti-cheat kernels (Stitch Analyzer), cross-platform desktop shells, mobile binaries, and automated Pterodactyl virtualization infrastructure.",
     short:
-      "Portfolio of ANSH9BOSS — Overall Developer and founder of Stitch Hosting.",
+      "Portfolio of ANSH9BOSS — Overall Developer and founder of Quorox Cloud.",
   },
   keywords: [
     "ANSH9BOSS",
-    "Stitch Hosting",
+    "Quorox Cloud",
     "Stitch Analyzer",
     "overall developer",
     "game security",

@@ -93,9 +93,9 @@ export type Project = {
 
 const projects: Project[] = [
   {
-    id: "stitchhosting",
-    category: "Game Hosting",
-    title: "Stitch Hosting",
+    id: "quoroxcloud",
+    category: "Cloud Virtualization",
+    title: "Quorox Cloud",
     src: PLACEHOLDER_IMG,
     screenshots: [],
     live: config.site,
@@ -115,7 +115,7 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Virtualized game server VPS nodes container virtualization orchestration engine powered by WHMCS automated billing APIs and Pterodactyl.
+            Founded, scaled, and engineered high-availability VPS container virtualization nodes powered by WHMCS automated billing APIs and Pterodactyl orchestration.
           </TypographyP>
           <ProjectsLinks live={this.live} />
         </div>
@@ -180,9 +180,9 @@ const projects: Project[] = [
     },
   },
   {
-    id: "stitchai",
-    category: "AI Agent",
-    title: "StitchAI Assistant",
+    id: "skriptbuilderai",
+    category: "Artificial Intelligence",
+    title: "Skript Builder AI",
     src: PLACEHOLDER_IMG,
     screenshots: [],
     live: config.site,
@@ -201,7 +201,7 @@ const projects: Project[] = [
       return (
         <div>
           <TypographyP className="font-mono">
-            Automated interactive client-side AI assistant twin widget trained on project credentials to resolve user queries and route contact forms.
+            Autonomous AI platform custom-trained to generate optimized Minecraft Skript templates, parse syntax trees, and automate server script logic generation.
           </TypographyP>
           <ProjectsLinks live={this.live} />
         </div>

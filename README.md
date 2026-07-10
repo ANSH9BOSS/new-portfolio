@@ -34,10 +34,10 @@ Explore the live deployment here:
 
 ## 🚀 Key Projects Listed
 
-1. **Stitch Hosting** — Dedicated Game/VPS virtualization orchestration platform integrating Pterodactyl container nodes with WHMCS automated billing APIs.
+1. **Quorox Cloud** — Dedicated Game/VPS virtualization orchestration platform integrating Pterodactyl container nodes with WHMCS automated billing APIs.
 2. **Stitch Analyzer** — Dual-sided anti-cheat verification system comprising an Electron memory scanning launcher and a Spigot/Paper Java NMS packet validator.
 3. **AutoTierList** — Automated player rating ranking leaderboard parsing log states and syncing Discord role groups.
-4. **StitchAI Assistant** — Automated client-side conversational AI widget answering questions about projects.
+4. **Skript Builder AI** — Autonomous AI platform custom-trained to generate optimized Minecraft Skript templates, parse syntax trees, and automate server script logic generation.
 5. **Elite Portfolios** — Interactive developer portfolios built with custom shaders, 3D canvases, and animations.
 6. **100+ Discord Bots** — Custom ticketing systems, checkout helpers, and admin daemons.
 
