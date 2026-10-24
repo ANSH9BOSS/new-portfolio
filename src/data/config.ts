@@ -1,24 +1,33 @@
 const config = {
-  title: "ANSH9BOSS | Overall Developer",
+  title: "Ansh Kumar | Developer & Builder",
   description: {
-    long: "Explore the portfolio of ANSH9BOSS — Overall Developer and founder of Quorox Cloud. Specializing in low-level Java NMS modding, custom anti-cheat kernels (Stitch Analyzer), cross-platform desktop shells, mobile binaries, and automated Pterodactyl virtualization infrastructure.",
+    long: "Personal portfolio of Ansh Kumar (ANSH9BOSS). I build websites, Android apps, Flutter, Windows apps, cloud servers with Aerix Cloud, mods, plugins, and game tools.",
     short:
-      "Portfolio of ANSH9BOSS — Overall Developer and founder of Quorox Cloud.",
+      "Personal portfolio of Ansh Kumar — developer and founder of Aerix Cloud.",
   },
   keywords: [
     "ANSH9BOSS",
-    "Quorox Cloud",
-    "Stitch Analyzer",
-    "overall developer",
-    "game security",
-    "Java NMS",
-    "Pterodactyl WHMCS",
-    "React Native",
-    "Electron launcher",
-    "portfolio"
+    "Ansh Kumar",
+    "Aerix Cloud",
+    "Cheats Analyzer",
+    "VayuClient",
+    "Developer",
+    "Full-Stack",
+    "Web Developer",
+    "Flutter",
+    "Android Apps",
+    "Windows Apps",
+    "Minecraft Mods",
+    "Plugins & Configs",
+    "Minecraft Launcher",
+    "Anti-Cheat Android",
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Portfolio"
   ],
   author: "ANSH9BOSS",
-  email: "anshkumar19zx@gmail.com",
+  email: "ansh9boss@aerix.cloud",
   site: "https://ansh9boss2.vercel.app/",
 
   // for github stars button
@@ -29,11 +38,10 @@ const config = {
     return this.site + "/assets/seo/og-image.png";
   },
   social: {
-    twitter: "https://discord.com/users/ansh9boss",
-    linkedin: "https://github.com/ANSH9BOSS",
-    instagram: "https://github.com/ANSH9BOSS",
-    facebook: "https://github.com/ANSH9BOSS",
     github: "https://github.com/ANSH9BOSS",
+    discord: "https://discord.com/users/ansh9boss",
+    email: "mailto:ansh9boss@aerix.cloud",
   },
+  discordUserId: process.env.NEXT_PUBLIC_DISCORD_USER_ID || "1372121943490170930",
 };
 export { config };

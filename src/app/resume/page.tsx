@@ -1,9 +1,9 @@
 import ResumeView from "./resume-view";
 
 export const metadata = {
-  title: "Résumé | ANSH9BOSS",
+  title: "Resume | ANSH9BOSS",
   description:
-    "Résumé of ANSH9BOSS — Overall Developer. View online or download the PDF.",
+    "Resume of Ansh Kumar (ANSH9BOSS). View online or download the PDF.",
 };
 
 export default function ResumePage() {

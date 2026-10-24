@@ -95,6 +95,8 @@ const ScrollingPreview = ({
     1,
   ];
 
+  const isSvg = src.endsWith(".svg");
+
   return (
     <div
       className="pointer-events-none absolute inset-0"
@@ -135,10 +137,11 @@ const ScrollingPreview = ({
             position: "absolute",
             inset: 0,
             backgroundImage: `url("${src}")`,
-            // Tall pages fill width and pan; normal images cover the frame.
-            backgroundSize: scrolls ? "100% auto" : "cover",
+            backgroundColor: isSvg ? "#090d16" : "transparent",
+            // Tall pages fill width and pan; normal images cover; SVG logos center cleanly
+            backgroundSize: isSvg ? "56px 56px" : scrolls ? "100% auto" : "cover",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: scrolls ? "50% 0%" : "center",
+            backgroundPosition: isSvg ? "center" : scrolls ? "50% 0%" : "center",
           }}
           animate={
             animate

@@ -15,6 +15,300 @@ import { usePerfProfile } from "@/hooks/use-perf-profile";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Ensures materials are cloned once per mesh so individual keycaps can be independently
+ * highlighted/illuminated without style bleed across other keys.
+ */
+function ensureClonedMaterials(mesh: any) {
+  if (!mesh || !mesh.material) return;
+  if (Array.isArray(mesh.material)) {
+    mesh.material = mesh.material.map((m: any) => {
+      if (m && !m._isCustomStealth) {
+        const cloned = m.clone();
+        cloned._isCustomStealth = true;
+        return cloned;
+      }
+      return m;
+    });
+  } else if (!mesh.material._isCustomStealth) {
+    const cloned = mesh.material.clone();
+    cloned._isCustomStealth = true;
+    mesh.material = cloned;
+  }
+}
+
+/**
+ * Finds the corresponding Skill object for any 3D node by inspecting its name
+ * and ancestor hierarchy up to the scene root.
+ */
+function findSkillForNode(node: any, scene: any): Skill | undefined {
+  let curr = node;
+  while (curr && curr !== scene) {
+    const n = (curr.name || "").toLowerCase();
+    const skill = Object.values(SKILLS).find((s) => s.name.toLowerCase() === n);
+    if (skill) return skill;
+    curr = curr.parent;
+  }
+  return undefined;
+}
+
+/**
+ * Applies the Stealth Dark & Accent design to the Spline keyboard scene.
+ * Transforms pastel/candy keycaps into an obsidian/charcoal mechanical keyboard with
+ * subtle resting emissive backlighting and crisp, preserved logo legends.
+ */
+function applyStealthKeyboardTheme(app: Application | undefined) {
+  if (!app) return;
+  try {
+    const scene = (app as any)._scene;
+    if (!scene) return;
+
+    try {
+      app.setBackgroundColor("transparent");
+    } catch {
+      // ignore
+    }
+
+    scene.traverse((obj: any) => {
+      const objName = (obj.name || "").toLowerCase();
+
+      // Exclude bongo cat and UI guide overlays
+      if (
+        objName.includes("bongo") ||
+        objName.includes("frame-1") ||
+        objName.includes("frame-2") ||
+        objName.includes("cat") ||
+        objName.startsWith("text-")
+      ) {
+        return;
+      }
+
+      // Neutralize scene lights so they don't cast warm/pink tints on dark materials
+      if (obj.isLight && obj.color?.set) {
+        obj.color.set("#dce6ff");
+        return;
+      }
+
+      if (!obj.isMesh || !obj.material) return;
+
+      ensureClonedMaterials(obj);
+
+      const materials: any[] = Array.isArray(obj.material) ? obj.material : [obj.material];
+
+      materials.forEach((mat: any) => {
+        if (!mat) return;
+        const matName = (mat.name || "").toLowerCase();
+
+        // 1. Textures, logos, and decals: preserve authentic colors and boost contrast
+        const isIconOrDecal =
+          Boolean(mat.map) ||
+          matName.includes("icon") ||
+          matName.includes("logo") ||
+          matName.includes("label") ||
+          matName.includes("text") ||
+          matName.includes("svg") ||
+          matName.includes("decal") ||
+          matName.includes("mark") ||
+          objName.includes("icon") ||
+          objName.includes("logo") ||
+          objName.includes("label") ||
+          objName.includes("decal");
+
+        if (isIconOrDecal) {
+          if (mat.roughness !== undefined) mat.roughness = 0.35;
+          if (mat.metalness !== undefined) mat.metalness = 0.1;
+          if (mat.emissive?.set) {
+            mat.emissiveIntensity = 0.25;
+          }
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 2. Chassis / Casing
+        const isBody =
+          objName === "body" ||
+          objName.includes("casing") ||
+          objName.includes("chassis") ||
+          matName.includes("body") ||
+          matName.includes("casing");
+
+        if (isBody) {
+          if (mat.color?.set) mat.color.set("#0c0e14");
+          if (mat.roughness !== undefined) mat.roughness = 0.52;
+          if (mat.metalness !== undefined) mat.metalness = 0.38;
+          if (mat.emissive?.set) mat.emissive.set("#000000");
+          if (mat.emissiveIntensity !== undefined) mat.emissiveIntensity = 0;
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 3. Platform / Deskmat
+        const isPlatform =
+          objName === "platform" ||
+          objName.includes("desk") ||
+          matName.includes("platform") ||
+          matName.includes("desk");
+
+        if (isPlatform) {
+          if (mat.color?.set) mat.color.set("#06070a");
+          if (mat.roughness !== undefined) mat.roughness = 0.88;
+          if (mat.metalness !== undefined) mat.metalness = 0.05;
+          if (mat.emissive?.set) mat.emissive.set("#000000");
+          if (mat.emissiveIntensity !== undefined) mat.emissiveIntensity = 0;
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 4. Keyboard switch plate / base
+        const isKeyboardBase =
+          objName === "keyboard" ||
+          matName.includes("keyboard") ||
+          matName.includes("plate") ||
+          matName.includes("switch");
+
+        if (isKeyboardBase) {
+          if (mat.color?.set) mat.color.set("#090b10");
+          if (mat.roughness !== undefined) mat.roughness = 0.58;
+          if (mat.metalness !== undefined) mat.metalness = 0.28;
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 5. Skill Keycaps
+        const matchingSkill = findSkillForNode(obj, scene);
+
+        if (matchingSkill) {
+          if (mat.color?.set) mat.color.set("#181b24");
+          if (mat.roughness !== undefined) mat.roughness = 0.65;
+          if (mat.metalness !== undefined) mat.metalness = 0.12;
+          if (mat.emissive?.set) {
+            mat.emissive.set(matchingSkill.color);
+            mat.emissiveIntensity = 0.08;
+          }
+          mat._baseColor = "#181b24";
+          mat._baseEmissive = matchingSkill.color;
+          mat._baseEmissiveIntensity = 0.08;
+          mat._isKeycapBody = true;
+          mat._skillName = matchingSkill.name;
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 6. Accent Keys (spacebar, enter, esc, shift)
+        const isAccentKey =
+          objName.includes("space") ||
+          objName.includes("enter") ||
+          objName.includes("shift") ||
+          objName.includes("esc") ||
+          objName.includes("tab") ||
+          matName.includes("accent") ||
+          matName.includes("space") ||
+          matName.includes("enter");
+
+        if (isAccentKey) {
+          if (mat.color?.set) mat.color.set("#1e222e");
+          if (mat.roughness !== undefined) mat.roughness = 0.62;
+          if (mat.metalness !== undefined) mat.metalness = 0.15;
+          if (mat.emissive?.set) {
+            mat.emissive.set("#3b82f6");
+            mat.emissiveIntensity = 0.05;
+          }
+          mat._baseColor = "#1e222e";
+          mat._baseEmissive = "#3b82f6";
+          mat._baseEmissiveIntensity = 0.05;
+          mat._isKeycapBody = true;
+          mat.needsUpdate = true;
+          return;
+        }
+
+        // 7. Standard alphanumeric Keycaps (keycap, keycap-desktop, keycap-mobile)
+        if (mat.color?.set) mat.color.set("#14161c");
+        if (mat.roughness !== undefined) mat.roughness = 0.68;
+        if (mat.metalness !== undefined) mat.metalness = 0.08;
+        if (mat.emissive?.set) mat.emissive.set("#000000");
+        if (mat.emissiveIntensity !== undefined) mat.emissiveIntensity = 0;
+        mat._baseColor = "#14161c";
+        mat._baseEmissive = "#000000";
+        mat._baseEmissiveIntensity = 0;
+        mat._isKeycapBody = true;
+        mat.needsUpdate = true;
+      });
+    });
+
+    (app as any).requestRender?.();
+  } catch (err) {
+    console.warn("Could not apply stealth keyboard theme:", err);
+  }
+}
+
+/**
+ * Animates a glowing RGB illumination on the active keycap using GSAP.
+ */
+function highlightKeycap(
+  app: Application | undefined,
+  skillName: string | null | undefined,
+  active: boolean
+) {
+  if (!app || !skillName) return;
+  try {
+    const scene = (app as any)._scene;
+    if (!scene) return;
+
+    const skill = SKILLS[skillName as SkillNames];
+    const skillColor = skill?.color || "#60a5fa";
+
+    scene.traverse((node: any) => {
+      if (!node.isMesh || !node.material) return;
+      const matched = findSkillForNode(node, scene);
+      if (matched?.name !== skillName && node.name?.toLowerCase() !== skillName.toLowerCase()) {
+        return;
+      }
+
+      const materials: any[] = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach((mat: any) => {
+        if (!mat || !mat.emissive?.set || mat.map) return;
+
+        if (active) {
+          mat.emissive.set(skillColor);
+          if (mat.color?.set) mat.color.set("#222736");
+          gsap.to(mat, {
+            emissiveIntensity: 0.85,
+            duration: 0.22,
+            overwrite: "auto",
+            ease: "power2.out",
+            onUpdate: () => {
+              (app as any).requestRender?.();
+            },
+          });
+        } else {
+          gsap.to(mat, {
+            emissiveIntensity: mat._baseEmissiveIntensity ?? 0.08,
+            duration: 0.45,
+            overwrite: "auto",
+            ease: "power2.out",
+            onUpdate: () => {
+              (app as any).requestRender?.();
+            },
+            onComplete: () => {
+              if (mat._baseEmissive && mat.emissive?.set) {
+                mat.emissive.set(mat._baseEmissive);
+              }
+              if (mat._baseColor && mat.color?.set) {
+                mat.color.set(mat._baseColor);
+              }
+              (app as any).requestRender?.();
+            },
+          });
+        }
+      });
+    });
+
+    (app as any).requestRender?.();
+  } catch {
+    // silent fallback
+  }
+}
+
 const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
   const { isLoading, bypassLoading } = usePreloader();
   const { theme } = useTheme();
@@ -40,10 +334,13 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
     if (!splineApp || selectedSkillRef.current?.name === e.target.name) return;
 
     if (e.target.name === "body" || e.target.name === "platform") {
-      if (selectedSkillRef.current) playReleaseSound();
+      if (selectedSkillRef.current) {
+        playReleaseSound();
+        highlightKeycap(splineApp, selectedSkillRef.current.name, false);
+      }
       setSelectedSkill(null);
       selectedSkillRef.current = null;
-      if (splineApp.getVariable("heading") && splineApp.getVariable("desc")) {
+      if (splineApp.getVariable("heading") !== undefined) {
         splineApp.setVariable("heading", "");
         splineApp.setVariable("desc", "");
       }
@@ -51,8 +348,12 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
       if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
         const skill = SKILLS[e.target.name as SkillNames];
         if (skill) {
-          if (selectedSkillRef.current) playReleaseSound();
+          if (selectedSkillRef.current) {
+            playReleaseSound();
+            highlightKeycap(splineApp, selectedSkillRef.current.name, false);
+          }
           playPressSound();
+          highlightKeycap(splineApp, skill.name, true);
           setSelectedSkill(skill);
           selectedSkillRef.current = skill;
         }
@@ -76,18 +377,29 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
     splineApp.addEventListener("keyUp", () => {
       if (!splineApp || isInputFocused()) return;
       playReleaseSound();
-      splineApp.setVariable("heading", "");
-      splineApp.setVariable("desc", "");
+      if (selectedSkillRef.current) {
+        highlightKeycap(splineApp, selectedSkillRef.current.name, false);
+      }
+      if (splineApp.getVariable("heading") !== undefined) {
+        splineApp.setVariable("heading", "");
+        splineApp.setVariable("desc", "");
+      }
     });
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp || isInputFocused()) return;
       const skill = SKILLS[e.target.name as SkillNames];
       if (skill) {
+        if (selectedSkillRef.current && selectedSkillRef.current.name !== skill.name) {
+          highlightKeycap(splineApp, selectedSkillRef.current.name, false);
+        }
         playPressSound();
+        highlightKeycap(splineApp, skill.name, true);
         setSelectedSkill(skill);
         selectedSkillRef.current = skill;
-        splineApp.setVariable("heading", skill.label);
-        splineApp.setVariable("desc", skill.shortDescription);
+        if (splineApp.getVariable("heading") !== undefined) {
+          splineApp.setVariable("heading", skill.label);
+          splineApp.setVariable("desc", skill.shortDescription);
+        }
       }
     });
     splineApp.addEventListener("mouseHover", handleMouseHover);
@@ -282,6 +594,11 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
         { y: 50, duration: 0.5, delay: 0.1, ease: "bounce.out" }
       );
     });
+
+    // Ensure newly revealed keycaps carry stealth materials
+    setTimeout(() => {
+      if (splineApp) applyStealthKeyboardTheme(splineApp);
+    }, 1100);
   };
 
   // --- Effects ---
@@ -343,9 +660,11 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
 
   useEffect(() => {
     if (!selectedSkill || !splineApp) return;
-    splineApp.setVariable("heading", selectedSkill.label);
-    splineApp.setVariable("desc", selectedSkill.shortDescription);
-  }, [selectedSkill]);
+    if (splineApp.getVariable("heading") !== undefined) {
+      splineApp.setVariable("heading", selectedSkill.label);
+      splineApp.setVariable("desc", selectedSkill.shortDescription);
+    }
+  }, [selectedSkill, splineApp]);
 
   // Handle rotation and teardown animations based on active section
   useEffect(() => {
@@ -393,8 +712,10 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
     const manageAnimations = async () => {
       // Reset text if not in skills
       if (activeSection !== "skills") {
-        splineApp.setVariable("heading", "");
-        splineApp.setVariable("desc", "");
+        if (splineApp.getVariable("heading") !== undefined) {
+          splineApp.setVariable("heading", "");
+          splineApp.setVariable("desc", "");
+        }
       }
 
       // Handle Rotate/Teardown Tweens
@@ -486,6 +807,9 @@ const KeyboardScene = ({ maxDpr }: { maxDpr: number }) => {
         ref={splineContainer}
         onLoad={(app: Application) => {
           setSplineApp(app);
+          applyStealthKeyboardTheme(app);
+          setTimeout(() => applyStealthKeyboardTheme(app), 300);
+          setTimeout(() => applyStealthKeyboardTheme(app), 1000);
           bypassLoading();
         }}
         scene="/assets/skills-keyboard.spline"

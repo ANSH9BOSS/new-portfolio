@@ -21,20 +21,20 @@ const links: Link[] = [
     href: '/#projects',
     thumbnail: '/assets/nav-link-previews/projects.png'
   },
-  // {
-  //   title: 'Skills',
-  //   href: '/skills',
-  //   thumbnail: '/assets/nav-link-previews/skills.png'
-  // },
-  // {
-  //   title: 'Testimonials',
-  //   href: '/testimonials',
-  //   thumbnail: '/assets/nav-link-previews/testimonials.png'
-  // },
   {
-    title: 'Blogs',
+    title: 'FAQ',
+    href: '/#faq',
+    thumbnail: '/assets/nav-link-previews/skills.png'
+  },
+  {
+    title: 'Blog',
     href: '/blogs',
     thumbnail: '/assets/nav-link-previews/blog.png',
+  },
+  {
+    title: 'Resume',
+    href: '/resume',
+    thumbnail: '/assets/nav-link-previews/about.png'
   },
   {
     title: 'Contact',

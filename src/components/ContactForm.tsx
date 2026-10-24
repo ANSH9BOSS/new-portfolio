@@ -55,8 +55,8 @@ const ContactForm = () => {
         throw new Error(data.error || `Request failed (${res.status})`);
       }
       toast({
-        title: "Thank you!",
-        description: "I'll get back to you as soon as possible.",
+        title: "Message sent!",
+        description: "Thanks for reaching out. I'll get back to you soon.",
         variant: "default",
         className: cn("top-0 mx-auto flex fixed md:top-4 md:right-4"),
       });
@@ -71,7 +71,7 @@ const ContactForm = () => {
     } catch (err) {
       toast({
         title: "Error",
-        description: "Something went wrong! Please try again.",
+        description: "Couldn't send message. Please try again.",
         className: cn(
           "top-0 w-full flex justify-center fixed md:max-w-7xl md:top-4 md:right-4"
         ),
@@ -95,7 +95,7 @@ const ContactForm = () => {
           {errors.fullName && <p className="text-sm text-red-500">{errors.fullName}</p>}
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="email" className="text-zinc-800 dark:text-zinc-200">Email Address</Label>
+          <Label htmlFor="email" className="text-zinc-800 dark:text-zinc-200">Email</Label>
           <Input
             id="email"
             placeholder="you@example.com"
@@ -107,16 +107,16 @@ const ContactForm = () => {
         </LabelInputContainer>
       </div>
       <div className="grid w-full gap-1.5 mb-4">
-        <Label htmlFor="content" className="text-zinc-800 dark:text-zinc-200">Your Message</Label>
+        <Label htmlFor="content" className="text-zinc-800 dark:text-zinc-200">Message</Label>
         <Textarea
-          placeholder="Tell me about your project..."
+          placeholder="Write your message here..."
           id="content"
           value={message}
           onChange={(e) => { setMessage(e.target.value); setErrors((p) => ({ ...p, message: undefined })); }}
         />
         {errors.message && <p className="text-sm text-red-500">{errors.message}</p>}
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          I&apos;ll never share your data with anyone else. Pinky promise!
+          I won&apos;t share your email with anyone.
         </p>
       </div>
       <Button

@@ -57,6 +57,7 @@ export default function RootLayout({
         spaceGroteskSans.variable,
         unbounded.variable,
         "font-sans",
+        "dark",
       ].join(" ")}
       suppressHydrationWarning
     >

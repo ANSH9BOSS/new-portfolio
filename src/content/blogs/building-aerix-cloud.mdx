@@ -1,0 +1,75 @@
+---
+title: "Building Aerix Cloud: Automating Game Server & VPS Hosting"
+publishedAt: "2026-07-07"
+summary: "How I built an automated game server and VPS hosting platform connecting WHMCS checkout webhooks to Pterodactyl Docker containers."
+author: "ANSH9BOSS"
+tags: ["virtualization", "pterodactyl", "whmcs", "docker", "hosting"]
+---
+
+# Building Aerix Cloud: Automating Game Server & VPS Hosting
+
+When someone buys a game server or VPS online, they don't want to wait around for hours while an admin sets it up manually. They expect it to be ready immediately.
+
+That was the main problem I set out to solve when building **Aerix Cloud**. Here's a breakdown of how the setup works and what I learned along the way.
+
+---
+
+## 1. What I wanted to solve
+
+Traditional hosting setups often involve manual configuration or clunky cron jobs:
+- Customers had to wait 15 to 30 minutes for their server to come online.
+- Nodes would sometimes run out of memory during busy hours.
+- Assigning network ports by hand was annoying and prone to mistakes.
+
+## 2. The goal
+
+Build a simple automation pipeline that:
+1. Catches payment notifications as soon as a checkout completes.
+2. Checks our server nodes to see which one has enough free RAM and CPU.
+3. Talks to Pterodactyl's remote daemon (Wings) to create an isolated Docker container.
+4. Sets up dedicated ports and emails the login details to the customer in under 10 seconds.
+
+## 3. How the flow works
+
+```text
+[Customer buys server] ──> [WHMCS Billing]
+                                │ (Webhook)
+                                ▼
+                       [Automation Script]
+                        ├── Check available node RAM & CPU
+                        ├── Pick the best server
+                        └── Send setup request
+                                │
+                                ▼
+                     [Pterodactyl Wings Daemon]
+                        ├── Spawns Docker container
+                        ├── Applies memory & CPU limits
+                        └── Maps network ports
+                                │
+                                ▼
+                     [Server Ready in ~8 Seconds]
+```
+
+## 4. What I used
+
+- **Web & Backend**: Next.js, Node.js, TypeScript
+- **Server Control**: Pterodactyl Panel API, Wings Go Daemon, Docker
+- **Billing & Store**: WHMCS API, Stripe
+- **OS & Networking**: Ubuntu Server, Nginx, Redis
+
+## 5. The tricky parts
+
+1. **Memory limits**: If one customer's Minecraft server starts lagging and runs out of RAM, it can't be allowed to crash the entire physical machine. I had to make sure container limits were strictly enforced in Docker without killing JVM garbage collection.
+2. **Duplicate webhooks**: Payment providers sometimes send the same webhook twice if their network flickers. I added request deduplication so customers didn't end up with two servers for one payment.
+3. **Port management**: Making sure two servers on the same node never tried to claim the same game port.
+
+## 6. Results
+
+- Server setup time dropped from 15+ minutes down to **under 10 seconds**.
+- Scaled to **140+ active server instances** without node crashes.
+- Uptime stayed above 99.9% with automated daily backups.
+
+## 7. What I learned
+
+- **Always verify payment webhooks on the server**: Never trigger a server build until the webhook signature is verified and confirmed.
+- **Docker memory caps need a little extra room**: Java applications need a small buffer above `-Xmx` for thread stacks and native memory, or the Linux kernel's OOM killer will terminate the process.

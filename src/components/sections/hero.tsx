@@ -2,125 +2,141 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { Mail } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Mail, ArrowRight, FileText, Terminal, Shield, Server } from "lucide-react";
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
-import { SiDiscord } from "react-icons/si";
+import { SiDiscord, SiGithub } from "react-icons/si";
 import { config } from "@/data/config";
-
 import { DiscordStatusWidget } from "../discord-status";
-
 import SectionWrapper from "../ui/section-wrapper";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
 
   return (
-    <SectionWrapper id="hero" className={cn("relative w-full h-screen")}>
-      <div className="grid md:grid-cols-2">
+    <SectionWrapper id="hero" className={cn("relative w-full min-h-screen")}>
+      <div className="grid md:grid-cols-2 w-full">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "min-h-[calc(100dvh-3rem)] md:min-h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
-            "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
+            "flex flex-col justify-center items-start",
+            "pt-24 pb-16 px-6 sm:px-10 md:p-16 lg:p-20 xl:p-24"
           )}
         >
           {!isLoading && (
-            <div className="flex flex-col">
+            <div className="flex flex-col max-w-xl">
               <div>
-                <BlurIn delay={0.7}>
-                  <p
-                    className={cn(
-                      "md:self-start mt-4 font-medium text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
-                    )}
-                  >
-                    Hi, I am
-                    <br className="md:hidden" />
+                <BlurIn delay={0.4}>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono mb-4">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Available for work
+                  </div>
+                </BlurIn>
+
+                <BlurIn delay={0.6}>
+                  <p className="font-medium text-sm sm:text-base text-slate-500 dark:text-zinc-400 font-mono tracking-wide">
+                    Ansh Kumar
                   </p>
                 </BlurIn>
 
-                <BlurIn delay={1}>
-                  <Tooltip delayDuration={300}>
-                    <TooltipTrigger asChild>
-                      <h1
-                        className={cn(
-                          "-ml-[6px] leading-none text-transparent text-slate-800 text-left",
-                          "font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl",
-                          "cursor-default text-edge-outline font-display "
-                        )}
-                      >
-                        {config.author}
-                      </h1>
-                    </TooltipTrigger>
-                    <TooltipContent
-                      side="top"
-                      className="dark:bg-white dark:text-black"
-                    >
-                      theres something waiting for you in devtools
-                    </TooltipContent>
-                  </Tooltip>
-                </BlurIn>
-                {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
-                <BlurIn delay={1.2}>
-                  <p
+                <BlurIn delay={0.8}>
+                  <h1
                     className={cn(
-                      "md:self-start md:mt-4 font-medium text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                      "-ml-[4px] leading-tight text-transparent text-slate-900 dark:text-white text-left",
+                      "font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl",
+                      "tracking-tight font-display mb-2"
                     )}
                   >
-                    Overall Developer
+                    {config.author}
+                  </h1>
+                </BlurIn>
+
+                <BlurIn delay={1.0}>
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-400 bg-clip-text text-transparent">
+                    Developer & Builder
+                  </h2>
+                </BlurIn>
+
+                <BlurIn delay={1.2}>
+                  <p className="mt-4 text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed font-sans">
+                    Hey, I&apos;m Ansh. I run <strong className="text-foreground font-semibold">Aerix Cloud</strong> and built <strong className="text-foreground font-semibold">Cheats Analyzer</strong>. I build websites, Android apps, Flutter, Windows apps, and manage cloud servers — plus plenty of mods, plugins, and configs.
                   </p>
+                </BlurIn>
+
+                <BlurIn delay={1.3}>
+                  <div className="mt-5 flex flex-wrap gap-2 text-xs font-mono">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary/40 text-muted-foreground border border-border/60">
+                      <Server className="w-3.5 h-3.5 text-sky-400" /> 140+ servers
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary/40 text-muted-foreground border border-border/60">
+                      <Shield className="w-3.5 h-3.5 text-emerald-400" /> Cloud & VPS
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary/40 text-muted-foreground border border-border/60">
+                      <Terminal className="w-3.5 h-3.5 text-indigo-400" /> 500k+ players
+                    </span>
+                  </div>
                 </BlurIn>
 
                 <BlurIn delay={1.4}>
-                  <div className="mt-4 md:self-start">
+                  <div className="mt-5">
                     <DiscordStatusWidget />
                   </div>
                 </BlurIn>
               </div>
-              <div className="mt-8 flex flex-col gap-3 w-fit">
-                <BoxReveal delay={2} width="100%" >
-                  <div className="md:self-start flex gap-3">
-                    <Tooltip delayDuration={300}>
-                      <TooltipTrigger asChild>
-                        <Link href={"#contact"}>
-                          <Button
-                            variant={"outline"}
-                            className="block w-full overflow-hidden"
-                          >
-                            Hire Me
-                          </Button>
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom">
-                        <p>pls 🥹 🙏</p>
-                      </TooltipContent>
-                    </Tooltip>
-                    <div className="flex items-center h-full gap-2">
+
+              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <BoxReveal delay={1.6} width="fit-content">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link href="#projects">
+                      <Button className="font-semibold shadow-md gap-2">
+                        Things I&apos;ve built <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
+
+                    <Link href="#contact">
+                      <Button variant="outline" className="font-semibold">
+                        Contact me
+                      </Button>
+                    </Link>
+
+                    <Link href="/resume">
+                      <Button variant="ghost" className="gap-1.5 text-xs font-mono">
+                        <FileText className="w-3.5 h-3.5 text-muted-foreground" />
+                        Resume
+                      </Button>
+                    </Link>
+
+                    <div className="flex items-center gap-1 pl-1">
                       <Link
-                        href="https://discord.com/users/ansh9boss"
+                        href="https://github.com/ANSH9BOSS"
                         target="_blank"
-                        className="cursor-can-hover"
+                        rel="noreferrer"
+                        aria-label="GitHub Profile"
                       >
-                        <Button variant={"outline"}>
-                          <SiDiscord size={24} />
+                        <Button variant="ghost" size="icon" className="w-9 h-9">
+                          <SiGithub size={18} />
                         </Button>
                       </Link>
                       <Link
-                        href="mailto:anshkumar19zx@gmail.com"
+                        href="https://discord.com/users/ansh9boss"
                         target="_blank"
-                        className="cursor-can-hover"
+                        rel="noreferrer"
+                        aria-label="Discord Profile"
                       >
-                        <Button variant={"outline"}>
-                          <Mail size={24} />
+                        <Button variant="ghost" size="icon" className="w-9 h-9">
+                          <SiDiscord size={18} />
+                        </Button>
+                      </Link>
+                      <Link
+                        href="mailto:ansh9boss@aerix.cloud"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="Email Address"
+                      >
+                        <Button variant="ghost" size="icon" className="w-9 h-9">
+                          <Mail size={18} />
                         </Button>
                       </Link>
                     </div>
@@ -130,9 +146,9 @@ const HeroSection = () => {
             </div>
           )}
         </div>
-        <div className="grid col-span-1"></div>
+        <div className="hidden md:grid col-span-1 pointer-events-none"></div>
       </div>
-      <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
+      <div className="absolute bottom-6 left-[50%] translate-x-[-50%] z-20">
         <ScrollDownIcon />
       </div>
     </SectionWrapper>

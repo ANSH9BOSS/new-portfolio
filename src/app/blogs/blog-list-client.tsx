@@ -59,8 +59,8 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
             </span>
           </div>
           <h1 className="font-display text-3xl md:text-5xl leading-[0.95] tracking-tight">
-            Thoughts &<br />
-            <span className="text-[hsl(20,100%,70%)]">Dispatches</span>
+            Articles &<br />
+            <span className="text-[hsl(20,100%,70%)]">Notes</span>
           </h1>
           <p className="mt-6 text-muted-foreground text-lg max-w-lg leading-relaxed font-sans">
             Notes on building things, breaking things, and occasionally writing about it.
@@ -117,7 +117,7 @@ export default function BlogListClient({ posts }: { posts: Post[] }) {
                       ))}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-[hsl(20,100%,70%)] transition-colors font-sans">
-                      Read article
+                      Read more
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </div>

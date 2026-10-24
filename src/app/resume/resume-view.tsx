@@ -34,7 +34,7 @@ export default function ResumeView() {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to portfolio
+            Back to home
           </Link>
           <Button>
             <a
@@ -60,7 +60,7 @@ export default function ResumeView() {
         >
           <ResumeDoodle
             src={`${RESUME_PATH}#toolbar=0&navpanes=0&view=FitH`}
-            title="ANSH9BOSS — Résumé"
+            title="ANSH9BOSS — Resume"
           />
         </motion.div>
       </div>
