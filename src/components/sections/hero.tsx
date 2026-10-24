@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { Mail, ArrowRight, FileText, Terminal, Shield, Server } from "lucide-react";
+import { Mail, ArrowRight, Terminal, Shield, Server } from "lucide-react";
 import { usePreloader } from "../preloader";
 import { BlurIn, BoxReveal } from "../reveal-animations";
 import ScrollDownIcon from "../scroll-down-icon";
@@ -101,12 +101,7 @@ const HeroSection = () => {
                       </Button>
                     </Link>
 
-                    <Link href="/resume">
-                      <Button variant="ghost" className="gap-1.5 text-xs font-mono">
-                        <FileText className="w-3.5 h-3.5 text-muted-foreground" />
-                        Resume
-                      </Button>
-                    </Link>
+
 
                     <div className="flex items-center gap-1 pl-1">
                       <Link
