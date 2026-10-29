@@ -1,0 +1,13 @@
+name = "portfolio-contact-mailer"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+# SendEmail binding for Cloudflare Email Routing
+send_email = [
+  { name = "SEB", destination_address = "ansh9boss@aerix.cloud" }
+]
+
+[vars]
+FROM_EMAIL = "contact@aerix.cloud"
+TO_EMAIL = "ansh9boss@aerix.cloud"
+# Optional secret: set with `npx wrangler secret put AUTH_SECRET` if desired

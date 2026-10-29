@@ -155,7 +155,40 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. SMTP Delivery Configuration
+    // 2. Cloudflare Worker Delivery (if configured)
+    const cfWorkerUrl = process.env.CLOUDFLARE_WORKER_URL;
+    if (cfWorkerUrl) {
+      try {
+        const cfRes = await fetch(cfWorkerUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(process.env.CLOUDFLARE_WORKER_SECRET
+              ? { Authorization: `Bearer ${process.env.CLOUDFLARE_WORKER_SECRET}` }
+              : {}),
+          },
+          body: JSON.stringify({ fullName, email, message, ip, timestamp }),
+        });
+
+        const cfData = (await cfRes.json().catch(() => ({}))) as { error?: string };
+        if (!cfRes.ok) {
+          throw new Error(cfData.error || `Cloudflare Worker returned error (${cfRes.status})`);
+        }
+
+        return Response.json({
+          success: true,
+          message: "Email sent successfully via Cloudflare Worker!",
+        });
+      } catch (cfErr: unknown) {
+        console.error("Cloudflare Worker delivery failed:", cfErr);
+        if (!process.env.SMTP_HOST) {
+          const msg = cfErr instanceof Error ? cfErr.message : "Cloudflare Worker mailer error";
+          return Response.json({ error: msg }, { status: 500 });
+        }
+      }
+    }
+
+    // 3. SMTP Delivery Configuration
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
@@ -213,11 +246,11 @@ export async function POST(req: Request) {
       return Response.json({ success: true, message: "Message delivered successfully to Discord!" });
     }
 
-    // Neither SMTP credentials nor Discord Webhook is configured
+    // Neither Cloudflare Worker, SMTP credentials, nor Discord Webhook is configured
     return Response.json(
       {
         error:
-          "SMTP credentials are not configured yet. Please configure SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS in .env.local (or set DISCORD_WEBHOOK_URL).",
+          "Email service not configured. Please set CLOUDFLARE_WORKER_URL, or SMTP credentials (SMTP_HOST, SMTP_USER, SMTP_PASS), or DISCORD_WEBHOOK_URL in .env.local.",
       },
       { status: 500 }
     );
